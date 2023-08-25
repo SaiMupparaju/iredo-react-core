@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation'
 
 
-const {width, height} = Dimensions.get('window');
-const ASPECT_RATIO = width/height; 
-const LATITUDE_DETLA = 0.02; 
-const LONGITUDE_DELTA = LATITUDE_DETLA * ASPECT_RATIO; 
-const INITIAL_POSITION = {
-  latitude: 38.972920,
-  longitude: -77.518540, 
-  latitudeDelta: LATITUDE_DETLA,
-  longitudeDelta: LONGITUDE_DELTA,
-};
+
 
 export default function Map() {
-    return (
-      <View style={styles.container}>
-        <MapView style={styles.map} provider={PROVIDER_GOOGLE} initialRegion = {INITIAL_POSITION}/>
-      </View>
+  const {width, height} = Dimensions.get('window');
+  const ASPECT_RATIO = width/height;  
+  const LATITUDE_DELTA = 0.02; 
+  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO; 
+
+  const [initialPosition, setInitialPosition] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
+  });
+
+  useEffect(() => {
+    const watchId = Geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        setInitialPosition({
+          latitude,
+          longitude,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+        });
+      },
+      (error) => console.log(error),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
-  }
+
+    return () => {
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={initialPosition}
+      />
+    </View>
+  );
+}
 
   
 const styles = StyleSheet.create({
