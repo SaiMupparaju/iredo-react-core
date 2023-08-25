@@ -1,0 +1,63 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-coolsquad-staging-55210-authRole",
+      "UnauthRoleArn": "arn:aws:iam::633230677751:role/amplify-coolsquad-staging-55210-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::633230677751:role/amplify-coolsquad-staging-55210-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-coolsquad-staging-55210-deployment",
+      "UnauthRoleName": "amplify-coolsquad-staging-55210-unauthRole",
+      "StackName": "amplify-coolsquad-staging-55210",
+      "StackId": "arn:aws:cloudformation:us-east-1:633230677751:stack/amplify-coolsquad-staging-55210/e080c060-3b2f-11ee-bd4b-0a0c26c80175",
+      "AmplifyAppId": "d3stfpbrg5m9tx"
+    }
+  },
+  "auth": {
+    "Coolsquad": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OPTIONAL",
+        "mfaTypes": [
+          "TOTP"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "NAME",
+          "FAMILY_NAME",
+          "PHONE_NUMBER",
+          "BIRTHDATE"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::633230677751:role/sns7e45391f55210-staging",
+        "UserPoolId": "us-east-1_2t8muhAGY",
+        "AppClientIDWeb": "4l6gnjju81l0uikn6u2m2go9hq",
+        "AppClientID": "31te78ro04c8ehg1vrh2rsie3c",
+        "IdentityPoolId": "us-east-1:03f9b8be-9792-49a6-8264-3888f91b9c71",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:633230677751:userpool/us-east-1_2t8muhAGY",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "Coolsquad"
+      },
+      "lastPushTimeStamp": "2023-08-17T02:46:51.853Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/auth/Coolsquad-cloudformation-template.json",
+        "logicalId": "authCoolsquad"
+      },
+      "lastPushDirHash": "JSvh1bvp9/Yfh9ws+QSiK5GgogI="
+    }
+  }
+}

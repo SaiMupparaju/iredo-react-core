@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-coolsquad-staging-55210-authRole",
+      "UnauthRoleArn": "arn:aws:iam::633230677751:role/amplify-coolsquad-staging-55210-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::633230677751:role/amplify-coolsquad-staging-55210-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-coolsquad-staging-55210-deployment",
+      "UnauthRoleName": "amplify-coolsquad-staging-55210-unauthRole",
+      "StackName": "amplify-coolsquad-staging-55210",
+      "StackId": "arn:aws:cloudformation:us-east-1:633230677751:stack/amplify-coolsquad-staging-55210/e080c060-3b2f-11ee-bd4b-0a0c26c80175",
+      "AmplifyAppId": "d3stfpbrg5m9tx"
+    },
+    "categories": {
+      "auth": {
+        "Coolsquad": {}
+      }
+    }
+  }
+}
