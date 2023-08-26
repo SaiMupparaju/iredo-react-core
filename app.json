@@ -10,7 +10,15 @@
       "eas": {
         "projectId": "4e59b477-9400-41d8-9f05-8c4c5b76c2dc"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
   },
   "name": "MyReactNative"
 }
