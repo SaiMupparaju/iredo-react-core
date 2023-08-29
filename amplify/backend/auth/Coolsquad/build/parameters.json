@@ -38,7 +38,7 @@
   "usernameAttributes": [
     "email"
   ],
-  "useDefault": "manual",
+  "useDefault": "default",
   "userPoolGroups": false,
   "userPoolGroupList": [],
   "adminQueries": false,
@@ -57,49 +57,7 @@
     ]
   },
   "breakCircularDependency": true,
-  "dependsOn": [
-    {
-      "category": "function",
-      "resourceName": "CoolsquadCustomMessage",
-      "triggerProvider": "Cognito",
-      "attributes": [
-        "Arn",
-        "Name"
-      ]
-    },
-    {
-      "category": "function",
-      "resourceName": "CoolsquadPostConfirmation",
-      "triggerProvider": "Cognito",
-      "attributes": [
-        "Arn",
-        "Name"
-      ]
-    },
-    {
-      "category": "function",
-      "resourceName": "CoolsquadPreSignup",
-      "triggerProvider": "Cognito",
-      "attributes": [
-        "Arn",
-        "Name"
-      ]
-    }
-  ],
+  "dependsOn": [],
   "hostedUI": false,
-  "authProviders": [],
-  "thirdPartyAuth": false,
-  "triggers": "{\"CustomMessage\":[\"verification-link\"],\"PostConfirmation\":[\"add-to-group\"],\"PreSignup\":[\"email-filter-allowlist\"]}",
-  "verificationBucketName": "coolsquadverificationbucket",
-  "parentStack": {
-    "Ref": "AWS::StackId"
-  },
-  "authTriggerConnections": [
-    "{\"triggerType\":\"CustomMessage\",\"lambdaFunctionName\":\"CoolsquadCustomMessage\"}",
-    "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"CoolsquadPostConfirmation\"}",
-    "{\"triggerType\":\"PreSignUp\",\"lambdaFunctionName\":\"CoolsquadPreSignup\"}"
-  ],
-  "permissions": [
-    "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
-  ]
+  "authProviders": []
 }
