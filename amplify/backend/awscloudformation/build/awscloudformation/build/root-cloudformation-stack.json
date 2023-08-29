@@ -210,15 +210,6 @@
         }
       }
     },
-    "apicoolsquad": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "Parameters": {
-          "env": "staging"
-        }
-      }
-    },
     "UpdateRolesWithIDPFunction": {
       "DependsOn": [
         "AuthRole",

@@ -17,32 +17,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: "center",
       },
-      mediumInputView: {
-        borderRadius: 30,
-        width: "70%",
-        height: 80,
-        marginBottom: 20,
-        alignItems: "center",
-        borderWidth: 1,
-        borderColor: "#FFC0CB"
-      },
-    largeInputView: {
-      backgroundColor: "#FFC0CB",
-      borderRadius: 30,
-      width: "70%",
-      height: 100,
-      marginBottom: 20,
-      alignItems: "center",
-    },
-    dyanmicInputView: {
-      borderRadius: 30,
-      borderColor: "#FFC0CB",
-      borderWidth: 1,
-      width: "70%",
-      height: 150,
-      marginBottom: 20,
-      alignItems: "center",
-    },
     TextInput: {
         height: 50,
         flex: 1,
