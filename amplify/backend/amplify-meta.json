@@ -15,7 +15,35 @@
   "auth": {
     "Coolsquad": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "CoolsquadCustomMessage",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "CoolsquadPostConfirmation",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "CoolsquadPreSignup",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OPTIONAL",
         "mfaTypes": [
@@ -52,12 +80,68 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Coolsquad"
       },
-      "lastPushTimeStamp": "2023-08-17T02:46:51.853Z",
+      "lastPushTimeStamp": "2023-08-29T16:47:20.324Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/auth/Coolsquad-cloudformation-template.json",
         "logicalId": "authCoolsquad"
+      }
+    }
+  },
+  "storage": {
+    "s3coolsquadstorageab49451e": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "lastPushTimeStamp": "2023-08-29T16:41:56.574Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3coolsquadstorageab49451e"
       },
-      "lastPushDirHash": "JSvh1bvp9/Yfh9ws+QSiK5GgogI="
+      "output": {
+        "BucketName": "coolsquad-storage-ab49451e55210-staging",
+        "Region": "us-east-1"
+      },
+      "lastPushDirHash": "5esPvVm7ryvUnEJREmxfCGAJYCI="
+    }
+  },
+  "api": {
+    "coolsquad": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apicoolsquad"
+      },
+      "lastPushTimeStamp": "2023-08-29T16:42:14.256Z"
+    }
+  },
+  "function": {
+    "CoolsquadCustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "CoolsquadPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "CoolsquadPreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }

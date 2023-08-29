@@ -14,6 +14,22 @@
     "categories": {
       "auth": {
         "Coolsquad": {}
+      },
+      "storage": {
+        "s3coolsquadstorageab49451e": {}
+      },
+      "function": {
+        "CoolsquadCustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "Iredo Account Confirmation",
+          "EMAILMESSAGE": ""
+        },
+        "CoolsquadPostConfirmation": {
+          "GROUP": ""
+        },
+        "CoolsquadPreSignup": {
+          "DOMAINALLOWLIST": "gmail.com, virginia.edu"
+        }
       }
     }
   }

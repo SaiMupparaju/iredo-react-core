@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "coolsquad",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-coolsquad-staging-55210-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/a9d9b6af6d2e82af189edc8f76c8a0659b616f87"
+}

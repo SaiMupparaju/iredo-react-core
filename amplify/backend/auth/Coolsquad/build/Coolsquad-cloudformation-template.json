@@ -5,6 +5,30 @@
     "env": {
       "Type": "String"
     },
+    "functionCoolsquadCustomMessageArn": {
+      "Type": "String",
+      "Default": "functionCoolsquadCustomMessageArn"
+    },
+    "functionCoolsquadCustomMessageName": {
+      "Type": "String",
+      "Default": "functionCoolsquadCustomMessageName"
+    },
+    "functionCoolsquadPostConfirmationArn": {
+      "Type": "String",
+      "Default": "functionCoolsquadPostConfirmationArn"
+    },
+    "functionCoolsquadPostConfirmationName": {
+      "Type": "String",
+      "Default": "functionCoolsquadPostConfirmationName"
+    },
+    "functionCoolsquadPreSignupArn": {
+      "Type": "String",
+      "Default": "functionCoolsquadPreSignupArn"
+    },
+    "functionCoolsquadPreSignupName": {
+      "Type": "String",
+      "Default": "functionCoolsquadPreSignupName"
+    },
     "identityPoolName": {
       "Type": "String"
     },
@@ -121,6 +145,24 @@
     },
     "authProviders": {
       "Type": "CommaDelimitedList"
+    },
+    "thirdPartyAuth": {
+      "Type": "String"
+    },
+    "triggers": {
+      "Type": "String"
+    },
+    "verificationBucketName": {
+      "Type": "String"
+    },
+    "parentStack": {
+      "Type": "String"
+    },
+    "authTriggerConnections": {
+      "Type": "CommaDelimitedList"
+    },
+    "permissions": {
+      "Type": "CommaDelimitedList"
     }
   },
   "Conditions": {
@@ -134,6 +176,52 @@
     }
   },
   "Resources": {
+    "CustomMessageConfirmationBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            {
+              "Ref": "verificationBucketName"
+            },
+            {
+              "Fn::Join": [
+                "-",
+                [
+                  {
+                    "Ref": "verificationBucketName"
+                  },
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "AllowedHeaders": [
+                "Authorization",
+                "Content-length"
+              ],
+              "AllowedMethods": [
+                "GET"
+              ],
+              "AllowedOrigins": [
+                "*"
+              ],
+              "MaxAge": 3000
+            }
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain"
+    },
     "SNSRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {

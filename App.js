@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Map from "./src/screens/Map.js";
 import LoginPage from './src/screens/LoginPage.js';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,7 +16,21 @@ import NewPasswordScreen from './src/screens/NewPasswordScreen.js';
 Amplify.configure(awsExports); 
 const Stack = createNativeStackNavigator();
 
-const App = ({signOut, user}) => {
+const App = () => {
+  
+  const checkUserSession = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      console.log("User is signed in:", user);
+    } catch (err) {
+      console.log("User is not signed in");
+    }
+  };
+  
+  useEffect(() => {
+    checkUserSession();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
