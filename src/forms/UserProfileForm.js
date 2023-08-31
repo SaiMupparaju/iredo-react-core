@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import {Auth} from 'aws-amplify'; 
 import {useForm, Controller, FormProvider} from 'react-hook-form'; 
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 
 export default function UserProfileScreenEditable() {
     const ProfileSetupScreen = () => {
