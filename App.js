@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={"EditableProfilecle"}>
+      <Stack.Navigator initialRouteName={"EditableProfile"}>
         <Stack.Screen name = "MapView" component={Map} options={{title:"MapView"}}/>
         <Stack.Screen name = "Login" component={LoginPage} options={{title:"Login"}}/>
         <Stack.Screen name = "RegisterPage" component={RegisterPage} options={{title:"Register"}} />
