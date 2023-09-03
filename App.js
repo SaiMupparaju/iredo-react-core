@@ -13,7 +13,15 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen.js';
 import NewPasswordScreen from './src/screens/NewPasswordScreen.js';
 import UserProfileScreenEditable from './src/forms/UserProfileForm.js';
 
-Amplify.configure(awsExports); 
+Amplify.configure({
+  ...awsExports,
+  Storage: {
+    AWSS3: {
+      bucket: 'coolsquad-storage-8dce078355210-staging',
+      region: 'us-east-1',  // Make sure this is set
+    }
+  }
+}); 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -39,73 +47,17 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={"EditableProfile"}>
+      <Stack.Navigator initialRouteName={initialRouteName}>
         <Stack.Screen name = "MapView" component={Map} options={{title:"MapView"}}/>
         <Stack.Screen name = "Login" component={LoginPage} options={{title:"Login"}}/>
         <Stack.Screen name = "RegisterPage" component={RegisterPage} options={{title:"Register"}} />
         <Stack.Screen name = "EmailVerification" component={ConfirmEmailScreen} options = {{title:"Verify Email"}} />
         <Stack.Screen name = "ForgotPasswordScreen" component={ForgotPasswordScreen} options={{title:"Send Reset Code"}}/>
         <Stack.Screen name = "NewPassword" component={NewPasswordScreen} options = {{title:"Verify and Change Password"}}/>
-        <Stack.Screen name = "EditableProfile" componet = {UserProfileScreenEditable} />
+        <Stack.Screen name = "EditableProfile" component = {UserProfileScreenEditable} options = {{title: "Edit Profile"}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
-
-const signUpConfig = {
-  header: "Custom Sign Up",
-  hideAllDefaults: true,
-  signUpFields: [
-    {
-      label: "Email",
-      key: "email",
-      required: true,
-      displayOrder: 1,
-      type: "string",
-    },
-    {
-      label: "First Name",
-      key: "name",
-      required: true,
-      displayOrder: 2,
-      type: "string",
-    },
-    {
-      label: "Last Name",
-      key: "family_name",
-      required: true,
-      displayOrder: 3,
-      type: "string",
-    },
-    {
-      label: "Username",
-      key: "username",
-      required: true,
-      displayOrder: 4,
-      type: "string",
-    },
-    {
-      label: "Phone Number",
-      key: "phone_number",
-      required: true,
-      displayOrder: 5,
-      type: "string",
-    },
-    {
-      label: "Birthday",
-      key: "birthday",
-      required: true,
-      displayOrder: 6,
-      type: "string",
-    },
-    {
-      label: "Password",
-      key: "password",
-      required: true,
-      displayOrder: 7,
-      type: "password",
-    }
-  ]
 }
 
 export default App; 

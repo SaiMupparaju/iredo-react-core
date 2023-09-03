@@ -9,6 +9,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    profileContainer: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: "#FFC0CB"
+    },
     inputView: {
         backgroundColor: "#FFC0CB",
         borderRadius: 30,
