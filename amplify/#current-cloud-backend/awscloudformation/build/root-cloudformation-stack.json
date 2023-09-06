@@ -152,62 +152,44 @@
         }
       }
     },
-    "apiCoolsquad": {
+    "authIredo": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "Parameters": {
-          "AppSyncApiName": "Coolsquad",
-          "DynamoDBBillingMode": "PAY_PER_REQUEST",
-          "DynamoDBEnableServerSideEncryption": false,
-          "authRoleName": {
-            "Ref": "AuthRoleName"
-          },
-          "unauthRoleName": {
-            "Ref": "UnauthRoleName"
-          },
-          "S3DeploymentBucket": "amplify-coolsquad-staging-55210-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/8d81b128736fdebe0e58a3a8cab5315616ee4994",
-          "env": "staging"
-        }
-      }
-    },
-    "authCoolsquad": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/auth/Coolsquad-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/auth/Iredo-cloudformation-template.json",
         "Parameters": {
           "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "coolsq7e45391f",
-          "userPoolName": "Coolsquad",
+          "resourceNameTruncated": "iredo54ac0b3b",
+          "userPoolName": "Iredo",
           "autoVerifiedAttributes": "email",
-          "mfaConfiguration": "OPTIONAL",
-          "mfaTypes": "TOTP",
+          "mfaConfiguration": "OFF",
+          "mfaTypes": "SMS Text Message",
           "smsAuthenticationMessage": "Your authentication code is {####}",
           "smsVerificationMessage": "Your verification code is {####}",
-          "emailVerificationSubject": "Your verification code",
-          "emailVerificationMessage": "Your verification code is {####}",
+          "emailVerificationSubject": "Verification code: {####}",
+          "emailVerificationMessage": "Verification code: {####}",
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": "",
+          "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Symbols,Requires Uppercase",
           "requiredAttributes": "email,name,family_name,phone_number,birthdate",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
           "userpoolClientWriteAttributes": "",
           "userpoolClientReadAttributes": "",
-          "userpoolClientLambdaRole": "Coolsq7e45391f_userpoolclient_lambda_role",
+          "userpoolClientLambdaRole": "Iredo54ac0b3b_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "7e45391f",
-          "resourceName": "Coolsquad",
+          "sharedId": "54ac0b3b",
+          "resourceName": "Iredo",
           "authSelections": "identityPoolAndUserPool",
           "serviceName": "Cognito",
           "usernameAttributes": "email",
-          "useDefault": "default",
+          "useDefault": "manual",
           "userPoolGroups": false,
           "userPoolGroupList": "",
           "adminQueries": false,
+          "thirdPartyAuth": false,
+          "authProviders": "",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
           "authRoleArn": {
@@ -224,41 +206,6 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUI": false,
-          "authProviders": "",
-          "env": "staging"
-        }
-      }
-    },
-    "storages3coolsquadstorage8dce0783": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-coolsquad-staging-55210-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "Parameters": {
-          "bucketName": "coolsquad-storage-8dce0783",
-          "selectedGuestPermissions": "",
-          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
-          "unauthRoleName": {
-            "Ref": "UnauthRoleName"
-          },
-          "authRoleName": {
-            "Ref": "AuthRoleName"
-          },
-          "s3PrivatePolicy": "Private_policy_a3628c56",
-          "s3ProtectedPolicy": "Protected_policy_a3628c56",
-          "s3PublicPolicy": "Public_policy_a3628c56",
-          "s3ReadPolicy": "read_policy_a3628c56",
-          "s3UploadsPolicy": "Uploads_policy_a3628c56",
-          "authPolicyName": "s3_amplify_a3628c56",
-          "unauthPolicyName": "s3_amplify_a3628c56",
-          "AuthenticatedAllowList": "ALLOW",
-          "GuestAllowList": "DISALLOW",
-          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject",
-          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject",
-          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject",
-          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
-          "s3PermissionsGuestPublic": "DISALLOW",
-          "s3PermissionsGuestUploads": "DISALLOW",
           "env": "staging"
         }
       }
@@ -267,7 +214,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authCoolsquad"
+        "authIredo"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -375,7 +322,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authCoolsquad",
+            "authIredo",
             "Outputs.IdentityPoolId"
           ]
         },
