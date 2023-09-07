@@ -3,19 +3,21 @@ import { Text, View, Image, Button } from 'react-native';
 import styles from '../Styles'; 
 import CustomTextInput from '../components/CustomTextInput';
 import { useNavigation } from '@react-navigation/native';
-import {Auth} from 'aws-amplify'; 
+import {Auth, Storage} from 'aws-amplify'; 
 import {useForm, Controller, FormProvider} from 'react-hook-form'; 
-import { Storage } from 'aws-amplify';
 import * as ImagePicker from 'expo-image-picker';
 
 
+
 export default function UserProfileScreenEditable() {
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();  
+  const bucketName = "iredoprofilepicture33352-staging";
 
   const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [date, setDate] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     async function fetchUser() {
@@ -30,7 +32,7 @@ export default function UserProfileScreenEditable() {
         setDate(attributes["birthdate"] || "");
 
         fetchImage(attributes);
-        console.log(image);
+        console.log("image");
       } catch (e) {
         console.error('Failed to fetch user', e);
       }
@@ -38,6 +40,10 @@ export default function UserProfileScreenEditable() {
     fetchUser();
   }, []);
   
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   //console.log(user);
   const {control, handleSubmit, reset, formState: {errors}, watch, trigger} = useForm({
@@ -59,7 +65,6 @@ export default function UserProfileScreenEditable() {
     }
   }, [firstName, lastName, date]);
 
-  const [image, setImage] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -113,8 +118,10 @@ export default function UserProfileScreenEditable() {
   const fetchImage = async (attributes) => {
     try {
       const userId = attributes["sub"]; // unique identifier for the user
-      const imageKey = `coolsquad-storage-8dce078355210-staging/${userId}.png`; // Assuming the image key is based on the user ID, you should change this based on how you save the images
+      const imageKey = `coolsquad-storage-8dce078355210-staging/${userId}.png`; 
+      const signedUrlExpireSeconds = 60 * 10; // Assuming the image key is based on the user ID, you should change this based on how you save the images
       const signedUrl = await Storage.get(imageKey);
+      
       setImage(signedUrl);
     } catch (error) {
       console.log('Error fetching image:', error);

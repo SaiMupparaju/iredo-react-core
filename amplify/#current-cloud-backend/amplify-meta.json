@@ -14,21 +14,12 @@
   },
   "auth": {
     "Iredo": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
       "customAuth": false,
+      "dependsOn": [],
       "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "FAMILY_NAME",
-          "PHONE_NUMBER",
-          "BIRTHDATE"
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
@@ -39,19 +30,23 @@
             "REQUIRES_UPPERCASE"
           ]
         },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
+        "signupAttributes": [
+          "EMAIL",
+          "NAME",
+          "FAMILY_NAME",
+          "PHONE_NUMBER",
+          "BIRTHDATE"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
         ],
         "verificationMechanisms": [
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/auth/Iredo-cloudformation-template.json",
-        "logicalId": "authIredo"
-      },
-      "lastPushTimeStamp": "2023-09-06T03:38:32.323Z",
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
       "output": {
         "CreatedSNSRole": "arn:aws:iam::633230677751:role/sns54ac0b3b33352-staging",
         "UserPoolId": "us-east-1_JSJfWyzxd",
@@ -62,7 +57,59 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Iredo"
       },
-      "lastPushDirHash": "PSPgYWuRWJOJOMbNDzUMV6dkokI="
+      "lastPushTimeStamp": "2023-09-07T03:26:25.867Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/auth/Iredo-cloudformation-template.json",
+        "logicalId": "authIredo"
+      }
+    }
+  },
+  "storage": {
+    "s3479f2038": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3",
+      "output": {
+        "BucketName": "iredoprofilepicture33352-staging",
+        "Region": "us-east-1"
+      },
+      "lastPushTimeStamp": "2023-09-07T03:26:25.869Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3479f2038"
+      }
+    }
+  },
+  "api": {
+    "Iredo": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "khb7nfziubg7ppsjrpjxw7neiy",
+        "GraphQLAPIEndpointOutput": "https://cz2zhjmk35a4zms4kgd5whbfbu.appsync-api.us-east-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-qnsdcdj2jnhcbom3gya43xdr44"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiIredo"
+      },
+      "lastPushTimeStamp": "2023-09-07T03:26:26.886Z",
+      "lastPushDirHash": "2zsgoCyX4oL2IrysrC2MrS9/LGA="
     }
   }
 }

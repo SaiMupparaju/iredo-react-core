@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3479f2038",
+  "policyUUID": "479f2038",
+  "bucketName": "iredoprofilepicture",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

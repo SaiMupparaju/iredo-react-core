@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "Iredo": {}
+      },
+      "storage": {
+        "s3479f2038": {}
+      },
+      "api": {
+        "Iredo": {}
       }
     }
   }

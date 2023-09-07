@@ -56,6 +56,7 @@ export default function Map() {
 
   const onCreateGamePress = () => {
     // Navigate to the Create Game screen or perform other actions
+    navigation.navigate("CreateGame");
   };
 
   const onEditProfilePress = async () => {

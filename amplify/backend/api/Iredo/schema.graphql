@@ -1,0 +1,18 @@
+type PokerGame @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  owner_sub: String!
+  max_players: Int!
+  num_cur_players: Int
+  small_blind: Float!
+  big_blind: Float!
+}
+
+type Game @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  owner_sub: String!
+  address: String!
+  max_players: Int!
+  num_cur_players: Int
+  small_blind: Float!
+  big_blind: Float!
+}

@@ -12,12 +12,13 @@ import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen.js';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen.js';
 import NewPasswordScreen from './src/screens/NewPasswordScreen.js';
 import UserProfileScreenEditable from './src/forms/UserProfileForm.js';
+import CreateGameForm from './src/forms/CreateGameForm.js';
 
 Amplify.configure({
   ...awsExports,
   Storage: {
     AWSS3: {
-      bucket: 'coolsquad-storage-8dce078355210-staging',
+      bucket: 'iredoprofilepicture33352-staging',
       region: 'us-east-1',  // Make sure this is set
     }
   }
@@ -55,6 +56,7 @@ const App = () => {
         <Stack.Screen name = "ForgotPasswordScreen" component={ForgotPasswordScreen} options={{title:"Send Reset Code"}}/>
         <Stack.Screen name = "NewPassword" component={NewPasswordScreen} options = {{title:"Verify and Change Password"}}/>
         <Stack.Screen name = "EditableProfile" component = {UserProfileScreenEditable} options = {{title: "Edit Profile"}} />
+        <Stack.Screen name = "CreateGame" component = {CreateGameForm} options = {{title: "Create Your Game"}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
