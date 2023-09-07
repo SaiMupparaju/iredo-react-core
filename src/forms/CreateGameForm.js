@@ -24,24 +24,24 @@ const createGame = /* GraphQL */ `
 `;
 
 export default function CreateGameForm() {
+    const navigator = useNavigation();
     const [ownerSub, setOwnerSub] = useState('');
     const [address, setAddress] = useState('');
-    const [maxPlayers, setMaxPlayers] = useState('');
-    const [smallBlind, setSmallBlind] = useState('');
-    const [bigBlind, setBigBlind] = useState('');
-    const [coordinates, setCoordinates] = useState(null);
     const [isFocused, setIsFocused] = useState(false);
     const {control, reset, handleSubmit, formState: {errors}, watch, trigger} = useForm({
         mode: 'onChange',
       }); 
     
     useEffect(() => {
+        console.log(address);
+    }, [address]);
+
+    useEffect(() => {
         async function fetchUser() {
           try{
             const data = await Auth.currentAuthenticatedUser();
             setOwnerSub(data["attributes"]["sub"]);
-    
-            
+            console.log(ownerSub);
           } catch (e) {
             console.error('Failed to fetch user', e);
           }
@@ -54,14 +54,15 @@ export default function CreateGameForm() {
         const gameDetails = {
         owner_sub: ownerSub,
         address: address,
-        max_players: parseInt({max_players}, 8),
-        small_blind: parseFloat({small_blind}),
-        big_blind: parseFloat({big_blind}),
+        max_players: parseInt(max_players, 10),
+        small_blind: parseFloat(small_blind),
+        big_blind: parseFloat(big_blind),
         };
-  
+        console.log("Sending the following details:", gameDetails);
       try {
         const newGame = await API.graphql(graphqlOperation(createGame, { input: gameDetails }));
         console.log('Game created:', newGame);
+        navigator.navigate('MapView');
       } catch (error) {
         console.error('Error creating game:', error);
       }
@@ -74,8 +75,10 @@ export default function CreateGameForm() {
                 <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                     <GooglePlacesAutocomplete
                     fetchDetails={true}
-                    onPress={(details = null) => {
-                        setAddress(details.formatted_address);
+                    onPress={(data, details = null) => {
+                        if (details) {
+                          setAddress(details.formatted_address);
+                        }
                     }}
                     query={{
                         key: 'AIzaSyD01ixqJxISffMD2Se-_W38raDjtUmA6Lo',
@@ -99,7 +102,9 @@ export default function CreateGameForm() {
                       }}
                       textInputProps={{
                         onFocus: () => setIsFocused(true),
-                        onBlur: () => setIsFocused(false)
+                        onBlur: () =>{
+                            setIsFocused(false);
+                        }
                         }}
                     />
                 </View>
@@ -107,38 +112,29 @@ export default function CreateGameForm() {
 
             <View style={[styles.inputView, {alignSelf: 'center'}]}>
                 <CustomTextInput
-                name="max_players"
-                control={control}
-                value={maxPlayers}
-                keyboardType="numeric"
-                onChangeText={text => setMaxPlayers(text)}
-                style={styles.TextInput}
+                name={"max_players"}
                 placeholder='Max Players.'
+                control={control}
+                keyboardType="numeric"
                 />
             </View>
             
             <View styles = {{alignItems: 'center', alignSelf: 'center', justifyContent:'center'}}>
             <View style={[styles.inputView, {alignSelf: 'center'}]}>
                 <CustomTextInput
-                name="small_blind"
-                control={control}
-                value={smallBlind}
-                keyboardType="numeric"
-                onChangeText={text => setSmallBlind(text)}
-                style={styles.TextInput}
+                name={"small_blind"}
                 placeholder='Small Blind.'
+                control={control}
+                keyboardType="numeric"
                 />
             </View>
 
             <View style={[styles.inputView, {alignSelf: 'center'}]}>
                 <CustomTextInput
                 name="big_blind"
-                control={control}
-                value={bigBlind}
-                keyboardType="numeric"
-                onChangeText={text => setBigBlind(text)}
-                style={styles.TextInput}
                 placeholder='Big Blind.'
+                control={control}
+                keyboardType="numeric"
                 />
             </View>
                 
