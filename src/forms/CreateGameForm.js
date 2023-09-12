@@ -27,14 +27,24 @@ export default function CreateGameForm() {
     const navigator = useNavigation();
     const [ownerSub, setOwnerSub] = useState('');
     const [address, setAddress] = useState('');
+    const [long, setLong] = useState(0.0);
+    const [lat, setLat] = useState(0.0);
     const [isFocused, setIsFocused] = useState(false);
     const {control, reset, handleSubmit, formState: {errors}, watch, trigger} = useForm({
         mode: 'onChange',
       }); 
     
-    useEffect(() => {
-        console.log(address);
-    }, [address]);
+    // useEffect(() => {
+    //     console.log(address);
+    // }, [address]);
+
+    // useEffect(() => {
+    //   console.log("lat", lat);
+    // }, [lat]);
+
+    // useEffect(() => {
+    //   console.log("lng", long);
+    // }, [long]);
 
     useEffect(() => {
         async function fetchUser() {
@@ -57,6 +67,8 @@ export default function CreateGameForm() {
         max_players: parseInt(max_players, 10),
         small_blind: parseFloat(small_blind),
         big_blind: parseFloat(big_blind),
+        longitude: long,
+        latitude: lat
         };
         console.log("Sending the following details:", gameDetails);
       try {
@@ -78,6 +90,8 @@ export default function CreateGameForm() {
                     onPress={(data, details = null) => {
                         if (details) {
                           setAddress(details.formatted_address);
+                          setLat(details.geometry.location.lat);
+                          setLong(details.geometry.location.lng);
                         }
                     }}
                     query={{

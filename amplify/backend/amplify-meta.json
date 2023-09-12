@@ -57,7 +57,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Iredo"
       },
-      "lastPushTimeStamp": "2023-09-07T03:26:25.867Z",
+      "lastPushTimeStamp": "2023-09-12T06:31:53.854Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/auth/Iredo-cloudformation-template.json",
         "logicalId": "authIredo"
@@ -73,7 +73,7 @@
         "BucketName": "iredoprofilepicture33352-staging",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2023-09-07T03:26:25.869Z",
+      "lastPushTimeStamp": "2023-09-12T06:31:53.856Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3479f2038"
@@ -108,8 +108,36 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiIredo"
       },
-      "lastPushTimeStamp": "2023-09-07T03:26:26.886Z",
-      "lastPushDirHash": "2zsgoCyX4oL2IrysrC2MrS9/LGA="
+      "lastPushTimeStamp": "2023-09-12T06:31:53.859Z",
+      "lastPushDirHash": "sfhV7Y+bjPtDSq09ly0n3yXETlc="
+    }
+  },
+  "function": {
+    "nearbyGames": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2023-09-12T06:30:47.680Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2023-09-12T06:30:49.753Z",
+      "distZipFilename": "nearbyGames-43775839782b39486669-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-iredo-staging-33352-deployment",
+        "s3Key": "amplify-builds/nearbyGames-43775839782b39486669-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/function/nearbyGames-cloudformation-template.json",
+        "logicalId": "functionnearbyGames"
+      },
+      "lastPushTimeStamp": "2023-09-12T06:31:54.546Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::633230677751:role/iredoLambdaRole93a608fb-staging",
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:633230677751:function:nearbyGames-staging",
+        "Name": "nearbyGames-staging",
+        "LambdaExecutionRole": "iredoLambdaRole93a608fb-staging"
+      },
+      "lastPushDirHash": "EDNxN20K3mJ6NT8QdtNW4giNkzo="
     }
   }
 }

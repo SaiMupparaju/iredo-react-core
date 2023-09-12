@@ -20,6 +20,12 @@
       },
       "api": {
         "Iredo": {}
+      },
+      "function": {
+        "nearbyGames": {
+          "deploymentBucketName": "amplify-iredo-staging-33352-deployment",
+          "s3Key": "amplify-builds/nearbyGames-43775839782b39486669-build.zip"
+        }
       }
     }
   }

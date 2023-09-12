@@ -258,7 +258,18 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-iredo-staging-33352-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/a03ae63b35fed26692c5313ca8936853e81837e0",
+          "S3DeploymentRootKey": "amplify-appsync-files/2da17e1ec5d6a1068184e6e65098b0a54d397737",
+          "env": "staging"
+        }
+      }
+    },
+    "functionnearbyGames": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-iredo-staging-33352-deployment/amplify-cfn-templates/function/nearbyGames-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-iredo-staging-33352-deployment",
+          "s3Key": "amplify-builds/nearbyGames-43775839782b39486669-build.zip",
           "env": "staging"
         }
       }

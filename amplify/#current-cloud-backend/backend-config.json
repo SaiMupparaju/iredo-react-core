@@ -59,6 +59,31 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "nearbyGames": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_nearbyGames_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nearbyGames"
+        }
+      ]
+    },
+    "AMPLIFY_function_nearbyGames_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nearbyGames"
+        }
+      ]
+    }
+  },
   "storage": {
     "s3479f2038": {
       "dependsOn": [],

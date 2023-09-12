@@ -15,4 +15,10 @@ type Game @model @auth(rules: [{allow: public}]) {
   num_cur_players: Int
   small_blind: Float!
   big_blind: Float!
+  longitude: Float!
+  latitude: Float!
+}
+
+type Query {
+  getGamesNearMe(latitude: Float!, longitude: Float!): [Game] @function(name: "nearbyGames-staging")
 }

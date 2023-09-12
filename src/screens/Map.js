@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import * as Location from 'expo-location'; 
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, useWindowDimensions, Alert, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Auth } from 'aws-amplify';
-
+import { Auth, API, graphqlOperation} from 'aws-amplify';
+import { getGamesNearMe } from '../graphql/queries';
 const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width/height; 
 const LATITUDE_DELTA = 0.02; 
@@ -44,6 +44,7 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
+    console.log(currentLocation);
     if (currentLocation && currentLocation.coords) {
       const { latitude, longitude } = currentLocation.coords;
       setLocationInstance({
@@ -70,6 +71,31 @@ export default function Map() {
     }
   };
 
+  const [games, setGames] = useState(null);
+
+  const fetchNearbyGames = async (latitude, longitude) => {
+    try {
+      const variables = { latitude, longitude };
+      const gameData = await API.graphql(graphqlOperation(getGamesNearMe, variables));
+      const gameList = gameData["data"]["getGamesNearMe"]; // the query name
+      console.log(gameData);
+      setGames(gameList);
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    }
+  };
+  
+  // Now you can call fetchNearbyGames in your useEffect
+  useEffect(() => {
+    if (currentLocation && currentLocation.coords) {
+      const { latitude, longitude } = currentLocation.coords;
+      fetchNearbyGames(latitude, longitude);
+    }
+  }, [currentLocation]);
+
+  useEffect(() => {
+    console.log("games", games);
+  }, [games]);
 
     return (
       <View style={styles.container}>
@@ -77,7 +103,25 @@ export default function Map() {
         style={styles.map} 
         provider={PROVIDER_GOOGLE} 
         region={locationInstance}
-        showsUserLocation = {true}/>
+        showsUserLocation = {true}>
+          {
+          games && games.map((game, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: game.latitude,
+              longitude: game.longitude,
+            }}
+            title={"Poker Gamer"} // Replace with actual game name or title
+            description={"pp"} // Replace with actual description or other info
+            onPress={() => {
+              // Handle marker click here
+              Alert.alert("Game clicked", `You clicked on a Poker Gamer`);
+            }}
+          />
+          ))
+          }
+        </MapView>
 
         <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={onCreateGamePress}>
