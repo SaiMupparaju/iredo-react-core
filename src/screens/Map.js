@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import * as Location from 'expo-location'; 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, useWindowDimensions, Alert, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Auth, API, graphqlOperation} from 'aws-amplify';
+import { StyleSheet,  View, Dimensions, Animated, Text, SafeAreaView, ScrollView, Easing, TouchableOpacity  } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import {API, graphqlOperation} from 'aws-amplify';
 import { getGamesNearMe } from '../graphql/queries';
+import HomeStack from '../components/BottomTab';
+import {GameView} from '../components/GameView'
+
 const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width/height; 
 const LATITUDE_DELTA = 0.02; 
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO; 
-
+const fadeAnim = new Animated.Value(0);  
 
 export default function Map() {
   const navigation = useNavigation(); 
@@ -21,6 +24,35 @@ export default function Map() {
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA,
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Your effect here.
+      // This will run when the screen is focused
+      // It will also run when you navigate back to the screen
+      
+      // Example: Refreshing the location when the screen focuses
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          return;
+        }
+  
+        let locationSubscription = await Location.watchPositionAsync({
+          accuracy: Location.Accuracy.High,
+          distanceInterval: 100, // receive updates when moving 1 meter
+        }, (location) => {
+          setCurrentLocation(location);
+        });
+  
+        return () => {
+          // This will remove the location subscription when the screen is unfocused
+          locationSubscription.remove();
+        };
+      })();
+  
+    }, [])
+  );
 
   useEffect(() => {
     (async () => {
@@ -44,7 +76,6 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    console.log(currentLocation);
     if (currentLocation && currentLocation.coords) {
       const { latitude, longitude } = currentLocation.coords;
       setLocationInstance({
@@ -55,21 +86,6 @@ export default function Map() {
     }
   }, [currentLocation]);
 
-  const onCreateGamePress = () => {
-    // Navigate to the Create Game screen or perform other actions
-    navigation.navigate("CreateGame");
-  };
-
-  const onEditProfilePress = async () => {
-    // Navigate to the Edit Profile screen or perform other actions
-    try {
-      const response = await Auth.currentAuthenticatedUser();
-      console.log('User is signed in:', response); // Logging response instead of user
-      navigation.navigate('EditableProfile');
-    } catch (err) {
-      console.log('User is not signed in:', err);
-    }
-  };
 
   const [games, setGames] = useState(null);
 
@@ -78,7 +94,6 @@ export default function Map() {
       const variables = { latitude, longitude };
       const gameData = await API.graphql(graphqlOperation(getGamesNearMe, variables));
       const gameList = gameData["data"]["getGamesNearMe"]; // the query name
-      console.log(gameData);
       setGames(gameList);
     } catch (error) {
       console.error('Error fetching games:', error);
@@ -96,6 +111,47 @@ export default function Map() {
   useEffect(() => {
     console.log("games", games);
   }, [games]);
+
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  const showPopup = () => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }
+    ).start();
+  };
+
+  const hidePopup = () => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }
+    ).start(() => {
+      setPopupVisible(false);
+    });
+  };
+
+  const togglePopup = () => {
+    setPopupVisible(true);
+  };
+
+  const onMarkerPress = (game) => {
+    setSelectedGame(game);
+    setPopupVisible(true);
+    showPopup();
+  };
+
+  
 
     return (
       <View style={styles.container}>
@@ -116,21 +172,28 @@ export default function Map() {
             description={"pp"} // Replace with actual description or other info
             onPress={() => {
               // Handle marker click here
-              Alert.alert("Game clicked", `You clicked on a Poker Gamer`);
+              onMarkerPress(game);
             }}
           />
           ))
           }
         </MapView>
+        {(popupVisible) && (
+          <Animated.View style = {styles.popup}>
+              <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+            <SafeAreaView>
+              <ScrollView>
+                <Text>
+                  <GameView game={selectedGame} />
+                </Text>
+              </ScrollView>
+            </SafeAreaView>
+          </Animated.View>
+        )}
 
-        <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={onCreateGamePress}>
-                  <Text style={styles.buttonText}>Create Game</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={onEditProfilePress}>
-                  <Text style={styles.buttonText}>Edit Profile</Text>
-                </TouchableOpacity>
-        </View>
+        <HomeStack />
       </View>
     );
   }
@@ -165,5 +228,54 @@ const styles = StyleSheet.create({
     buttonText: {
       fontSize: 16,
       color:'white'
+    },
+    bottomTab: {
+      position: 'absolute',
+      height: '15%',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      padding: 10,
+    },
+    tabButton: {
+      padding: 10,
+      backgroundColor: '#007AFF',
+      borderRadius: 10,
+      alignContent: 'center',
+      justifyContent: 'center', 
+    },
+    tabButtonText: {
+      color: 'white',
+    },
+    popup: {
+      position: 'absolute',
+      top: '25%',  // Adjust according to your preference
+      left: '5%',  // Adjust according to your preference
+      width: '90%',  // Adjust according to your preference
+      height: '50%',  // Adjust according to your preference
+      backgroundColor: 'white',
+      borderRadius: 10,  // Rounded corners
+      padding: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    closeButton: {
+      position: 'absolute',
+      right: 10,
+      top: 10,
+      zIndex: 1,
+      backgroundColor: 'gray',
+      borderRadius: 15,
+      width: 30,
+      height: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    closeButtonText: {
+      color: 'white',
+      fontSize: 18,
     },
   });

@@ -4,14 +4,14 @@ import {useState} from 'react';
 import styles from '../Styles'; 
 import CustomTextInput from '../components/CustomTextInput';
 import { useNavigation } from '@react-navigation/native';
-import {Auth} from 'aws-amplify'; 
 import {useForm, Controller, FormProvider} from 'react-hook-form'; 
-
+import { API, graphqlOperation, Auth } from 'aws-amplify';
+import {createUserInfo} from '../graphql/mutations';  // Adjust the import to your folder structure
+import { listUserInfos } from '../graphql/queries';
 
 
 
 export default function LoginPage() {
-
     const {height} = useWindowDimensions(); 
     const navigation = useNavigation(); 
     const {control, handleSubmit, formState: {errors}, watch, trigger} = useForm({mode: 'onChange'}); 
@@ -20,19 +20,44 @@ export default function LoginPage() {
     const [buttonText, setButtonText] = useState("LOGIN"); 
 
     const onSignInPressed = async(data) => {
-        const {username, password} = data; 
-        if(loading){
-            return; 
+        const { username, password } = data;
+        if (loading) {
+          return;
         }
         setLoading(true);
         setButtonText("Loading...");
         try {
-            const response = await Auth.signIn(username, password); 
-            console.log("response");
-            navigation.navigate("MapView");
-            
-        } catch(e) {
-            Alert.alert('Oops', e.message); 
+          const authResponse = await Auth.signIn(username, password);
+          const userInfo = await Auth.currentAuthenticatedUser();
+          const userSub = userInfo['attributes']['sub'];
+
+      
+          // Query the database to see if userInfo already exists
+          const existingUser = await API.graphql(
+            graphqlOperation(listUserInfos, {
+              filter: {
+                user_sub: {
+                  eq: userSub,
+                },
+              },
+            })
+          );
+          console.log("existing", existingUser);
+          if (existingUser.data.listUserInfos.items.length === 0) {
+            // If user info doesn't exist in the database, create a new user info record
+            const newUserData = {
+              user_sub: userSub,
+              first_name: userInfo['attributes']['name'],
+              family_name: userInfo['attributes']['family_name'],
+              email: userInfo['attributes']['email'],
+              birthdate: "2004/02/06"
+            };
+            await API.graphql(graphqlOperation(createUserInfo, { input: newUserData }));
+          }
+          
+          navigation.navigate("MapView");
+        } catch (e) {
+          console.log(e);
         }
         setLoading(false);
         setButtonText("LOGIN"); 

@@ -136,3 +136,174 @@ export const deleteGame = /* GraphQL */ `
     }
   }
 `;
+export const createGameRequest = /* GraphQL */ `
+  mutation CreateGameRequest(
+    $input: CreateGameRequestInput!
+    $condition: ModelGameRequestConditionInput
+  ) {
+    createGameRequest(input: $input, condition: $condition) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateGameRequest = /* GraphQL */ `
+  mutation UpdateGameRequest(
+    $input: UpdateGameRequestInput!
+    $condition: ModelGameRequestConditionInput
+  ) {
+    updateGameRequest(input: $input, condition: $condition) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteGameRequest = /* GraphQL */ `
+  mutation DeleteGameRequest(
+    $input: DeleteGameRequestInput!
+    $condition: ModelGameRequestConditionInput
+  ) {
+    deleteGameRequest(input: $input, condition: $condition) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createUserInfo = /* GraphQL */ `
+  mutation CreateUserInfo(
+    $input: CreateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    createUserInfo(input: $input, condition: $condition) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateUserInfo = /* GraphQL */ `
+  mutation UpdateUserInfo(
+    $input: UpdateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    updateUserInfo(input: $input, condition: $condition) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteUserInfo = /* GraphQL */ `
+  mutation DeleteUserInfo(
+    $input: DeleteUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    deleteUserInfo(input: $input, condition: $condition) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;

@@ -38,6 +38,7 @@ export default function ConfirmEmailScreen() {
         try {
             const response = await Auth.confirmSignUp(username, code);
             console.log(response); 
+
             navigation.navigate('Login');
         } catch (e) {
             Alert.alert('Oops', e.message); 

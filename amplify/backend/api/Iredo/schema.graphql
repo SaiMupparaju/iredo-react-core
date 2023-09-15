@@ -19,6 +19,23 @@ type Game @model @auth(rules: [{allow: public}]) {
   latitude: Float!
 }
 
+type GameRequest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  gameID: ID!
+  requester_sub: String!
+  status: String! # PENDING, ACCEPTED, REJECTED
+  game: Game @hasOne(fields: ["gameID"])
+}
+
+type UserInfo @model @auth(rules: [{allow: public}]){
+  id: ID!
+  user_sub: String! @primaryKey
+  first_name: String
+  family_name: String
+  email: String
+  birthdate: String
+}
+
 type Query {
   getGamesNearMe(latitude: Float!, longitude: Float!): [Game] @function(name: "nearbyGames-staging")
 }

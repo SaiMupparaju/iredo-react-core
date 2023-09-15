@@ -258,7 +258,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-iredo-staging-33352-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/2da17e1ec5d6a1068184e6e65098b0a54d397737",
+          "S3DeploymentRootKey": "amplify-appsync-files/f524840dacd565d1c3930d20e2d73d94616ba3cf",
           "env": "staging"
         }
       }

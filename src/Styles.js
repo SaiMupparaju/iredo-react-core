@@ -17,6 +17,16 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: "#FFC0CB"
     },
+    tab: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'white',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      padding: 20,
+    },
     inputView: {
         backgroundColor: "#FFC0CB",
         borderRadius: 30,
@@ -112,6 +122,15 @@ const styles = StyleSheet.create({
       },
       link: {
         color: '#FDB075',
+      },
+      profileImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+      },
+      infoText: {
+        fontSize: 16,
+        marginVertical: 5,
       },
   });
 

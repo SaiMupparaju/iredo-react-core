@@ -187,3 +187,183 @@ export const syncGames = /* GraphQL */ `
     }
   }
 `;
+export const getGameRequest = /* GraphQL */ `
+  query GetGameRequest($id: ID!) {
+    getGameRequest(id: $id) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listGameRequests = /* GraphQL */ `
+  query ListGameRequests(
+    $filter: ModelGameRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameRequests(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameID
+        requester_sub
+        status
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncGameRequests = /* GraphQL */ `
+  query SyncGameRequests(
+    $filter: ModelGameRequestFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncGameRequests(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        gameID
+        requester_sub
+        status
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getUserInfo = /* GraphQL */ `
+  query GetUserInfo($id: ID!) {
+    getUserInfo(id: $id) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listUserInfos = /* GraphQL */ `
+  query ListUserInfos(
+    $filter: ModelUserInfoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        user_sub
+        first_name
+        family_name
+        email
+        birthdate
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncUserInfos = /* GraphQL */ `
+  query SyncUserInfos(
+    $filter: ModelUserInfoFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserInfos(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        user_sub
+        first_name
+        family_name
+        email
+        birthdate
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+
+export const getUserInfoBySub = /* GraphQL */ `
+  query GetUserInfoBySub($user_sub: String!) {
+    getUserInfoBySub(user_sub: $user_sub) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+    }
+  }
+`;

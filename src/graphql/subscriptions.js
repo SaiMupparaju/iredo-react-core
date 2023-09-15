@@ -124,3 +124,162 @@ export const onDeleteGame = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGameRequest = /* GraphQL */ `
+  subscription OnCreateGameRequest(
+    $filter: ModelSubscriptionGameRequestFilterInput
+  ) {
+    onCreateGameRequest(filter: $filter) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateGameRequest = /* GraphQL */ `
+  subscription OnUpdateGameRequest(
+    $filter: ModelSubscriptionGameRequestFilterInput
+  ) {
+    onUpdateGameRequest(filter: $filter) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteGameRequest = /* GraphQL */ `
+  subscription OnDeleteGameRequest(
+    $filter: ModelSubscriptionGameRequestFilterInput
+  ) {
+    onDeleteGameRequest(filter: $filter) {
+      id
+      gameID
+      requester_sub
+      status
+      game {
+        id
+        owner_sub
+        address
+        max_players
+        num_cur_players
+        small_blind
+        big_blind
+        longitude
+        latitude
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onCreateUserInfo = /* GraphQL */ `
+  subscription OnCreateUserInfo($filter: ModelSubscriptionUserInfoFilterInput) {
+    onCreateUserInfo(filter: $filter) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateUserInfo = /* GraphQL */ `
+  subscription OnUpdateUserInfo($filter: ModelSubscriptionUserInfoFilterInput) {
+    onUpdateUserInfo(filter: $filter) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteUserInfo = /* GraphQL */ `
+  subscription OnDeleteUserInfo($filter: ModelSubscriptionUserInfoFilterInput) {
+    onDeleteUserInfo(filter: $filter) {
+      id
+      user_sub
+      first_name
+      family_name
+      email
+      birthdate
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;

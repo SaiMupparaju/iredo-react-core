@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import {Auth, Storage} from 'aws-amplify'; 
 import {useForm, Controller, FormProvider} from 'react-hook-form'; 
 import * as ImagePicker from 'expo-image-picker';
+import HomeStack from '../components/BottomTab';
 
 
 
@@ -25,14 +26,11 @@ export default function UserProfileScreenEditable() {
         const data = await Auth.currentAuthenticatedUser();
         setUser(data);
         const {attributes} = data; 
-        console.log(attributes);
-        console.log(attributes["family_name"]);
         setFirstName(attributes["name"]);
         setLastName(attributes["family_name"]);
         setDate(attributes["birthdate"] || "");
 
         fetchImage(attributes);
-        console.log("image");
       } catch (e) {
         console.error('Failed to fetch user', e);
       }
@@ -41,11 +39,6 @@ export default function UserProfileScreenEditable() {
   }, []);
   
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
-
-  //console.log(user);
   const {control, handleSubmit, reset, formState: {errors}, watch, trigger} = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -74,25 +67,26 @@ export default function UserProfileScreenEditable() {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if (!result.canceled) {
+      const selectedAsset = result.assets[0];
+      if (selectedAsset) {
+        setImage(selectedAsset.uri);
+      }
     }
   };
 
   const uploadImage = async (userId) => {
-    const fileName = `${userId}.png`;
-    const key = `coolsquad-storage-8dce078355210-staging/${fileName}`;
-  
-    await Storage.put(key, image, {
+    const key = `public/coolsquad-storage-8dce078355210-staging/${userId}.jpeg`;
+    // Convert image URI to blob
+    const response = await fetch(image);
+    const blob = await response.blob();
+    await Storage.put(key, blob, {
       contentType: 'image/png',
-      cacheControl: 'no-cache, no-store, must-revalidate', // disables caching
-    });
-  
+    }); 
     return key;
   };
 
   const saveProfile = async (data) => {
-    console.log(data);
     const {first_name, last_name} = data;
     try {
       const userId = user.attributes["sub"]; // unique identifier for the user
@@ -118,7 +112,7 @@ export default function UserProfileScreenEditable() {
   const fetchImage = async (attributes) => {
     try {
       const userId = attributes["sub"]; // unique identifier for the user
-      const imageKey = `coolsquad-storage-8dce078355210-staging/${userId}.png`; 
+      const imageKey = `public/coolsquad-storage-8dce078355210-staging/${userId}.jpeg`; 
       const signedUrlExpireSeconds = 60 * 10; // Assuming the image key is based on the user ID, you should change this based on how you save the images
       const signedUrl = await Storage.get(imageKey);
       
@@ -133,8 +127,6 @@ export default function UserProfileScreenEditable() {
   }
 
   return (
-
-
     <FormProvider {...{control, handleSubmit, reset, formState: {errors}, watch, trigger}}>
       <View style={styles.profileContainer}>
 
@@ -173,6 +165,8 @@ export default function UserProfileScreenEditable() {
         </View>
 
         <Button title="Save Profile" onPress={handleSubmit(saveProfile)} />
+
+        <HomeStack></HomeStack>
       </View>
     </FormProvider>
   );

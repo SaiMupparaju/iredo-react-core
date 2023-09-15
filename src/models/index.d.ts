@@ -1,6 +1,6 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
 
 
@@ -82,4 +82,74 @@ export declare type Game = LazyLoading extends LazyLoadingDisabled ? EagerGame :
 
 export declare const Game: (new (init: ModelInit<Game>) => Game) & {
   copyOf(source: Game, mutator: (draft: MutableModel<Game>) => MutableModel<Game> | void): Game;
+}
+
+type EagerGameRequest = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<GameRequest, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly gameID: string;
+  readonly requester_sub: string;
+  readonly status: string;
+  readonly game?: Game | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyGameRequest = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<GameRequest, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly gameID: string;
+  readonly requester_sub: string;
+  readonly status: string;
+  readonly game: AsyncItem<Game | undefined>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type GameRequest = LazyLoading extends LazyLoadingDisabled ? EagerGameRequest : LazyGameRequest
+
+export declare const GameRequest: (new (init: ModelInit<GameRequest>) => GameRequest) & {
+  copyOf(source: GameRequest, mutator: (draft: MutableModel<GameRequest>) => MutableModel<GameRequest> | void): GameRequest;
+}
+
+type EagerUserInfo = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<UserInfo, 'user_sub'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly user_sub: string;
+  readonly first_name?: string | null;
+  readonly family_name?: string | null;
+  readonly email?: string | null;
+  readonly birthdate?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyUserInfo = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<UserInfo, 'user_sub'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly user_sub: string;
+  readonly first_name?: string | null;
+  readonly family_name?: string | null;
+  readonly email?: string | null;
+  readonly birthdate?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type UserInfo = LazyLoading extends LazyLoadingDisabled ? EagerUserInfo : LazyUserInfo
+
+export declare const UserInfo: (new (init: ModelInit<UserInfo>) => UserInfo) & {
+  copyOf(source: UserInfo, mutator: (draft: MutableModel<UserInfo>) => MutableModel<UserInfo> | void): UserInfo;
 }
